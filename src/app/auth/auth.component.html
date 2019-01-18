@@ -1,0 +1,157 @@
+<div class="page-auth">
+    <div class="container-fuid">
+        <!-- Start of Login Page-->
+        <div class="row login-container" *ngIf="!isRegister">
+            <div class="col-xs-12">
+                <div class="welcome-container">
+                    <h4 class="page-header text-center">
+                        Welcome to You Source School
+                    </h4>
+
+                    <div class="alert alert-info welcome-content">
+                        <form (ngSubmit)="onLogin()" novalidate [formGroup]="userLoginFormGroup">
+                            <div class="form-container">
+                                <div class="form-group">
+                                    <label for="email">Email: </label>
+                                    <input type="email" formControlName="userName" id="email" class="form-control">
+
+                                    <div class="alert alert-danger error-message" *ngIf="userLoginFormGroup.controls.userName.invalid && isSubmitted">
+                                        <div *ngIf="userLoginFormGroup.controls.userName.errors.required">
+                                            Email is required.
+                                        </div>
+                                        <div *ngIf="userLoginFormGroup.controls.userName.errors.email">
+                                            Must be a valid email
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password: </label>
+                                    <input type="password" formControlName="password" class="form-control" id="password">
+
+                                    <div class="alert alert-danger error-message" *ngIf="userLoginFormGroup.controls.password.invalid && isSubmitted">
+                                        <div *ngIf="userLoginFormGroup.controls.password.errors.required">
+                                            Password is required.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-container">
+                                    <input [disabled]="isLoading" type="submit" class="btn btn-primary" value="Login">
+                                    <input type="button" (click)="clearUserDetails()" class="btn btn-danger" value="Cancel">
+                                </div>
+                            </div>
+                        </form>
+                        <p>You don't have an Account? Please register here
+                            <span>
+                                <a (click)="switchAction()">Register</a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Login Page-->
+
+        <!-- Start of Register -->
+        <div class="row register-container" *ngIf="isRegister">
+            <div class="col-xs-12">
+                <div class="register-form-container">
+                    <h4 class="page-header">
+                        Please fill out the details
+                    </h4>
+
+                    <form (ngSubmit)="onRegister(userFormGroup)" [formGroup]="userFormGroup" novalidate>
+                        <div class="form-container">
+                            <div class="form-group">
+                                <label for="firstName">First Name: </label>
+                                <input type="text" class="form-control" formControlName="firstName">
+
+                                <div class="alert alert-danger error-message" *ngIf="userFormGroup.controls.firstName.invalid && isSubmitted">
+                                    <div *ngIf="userFormGroup.controls.firstName.errors.required">
+                                        First Name is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middleName">Middle Name: </label>
+                                <input type="text" class="form-control" formControlName="middleName">
+                                <div class="alert alert-danger error-message" *ngIf="userFormGroup.controls.middleName.invalid && isSubmitted">
+                                    <div *ngIf="userFormGroup.controls.middleName.errors.required">
+                                        Middle Name is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name: </label>
+                                <input type="text" class="form-control" formControlName="lastName">
+                                <div class="alert alert-danger error-message" *ngIf="userFormGroup.controls.lastName.invalid && isSubmitted">
+                                    <div *ngIf="userFormGroup.controls.lastName.errors.required">
+                                        Middle Name is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender: </label>
+                                <select name="gender" id="gender" class="form-control" formControlName="gender">
+                                    <option value="">Please select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+
+                                <div class="alert alert-danger error-message" *ngIf="userFormGroup.controls.gender.invalid && isSubmitted">
+                                    <div *ngIf="userFormGroup.controls.gender.errors.required">
+                                        Gender is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email: </label>
+                                <input type="email" class="form-control" formControlName="email">
+                                <div class="alert alert-danger error-message" *ngIf="userFormGroup.controls.email.invalid && isSubmitted">
+                                    <div *ngIf="userFormGroup.controls.email.errors.required">
+                                        Email is required.
+                                    </div>
+
+                                    <div *ngIf="userFormGroup.controls.email.errors.email">
+                                        Must be a valid email
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password: </label>
+                                <input type="password" class="form-control" formControlName="password">
+                                <div class="alert alert-danger error-message" *ngIf="userFormGroup.controls.password.invalid && isSubmitted">
+                                    <div *ngIf="userFormGroup.controls.password.errors.required">
+                                        Email is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password: </label>
+                                <input type="password" class="form-control" formControlName="confirmPassword">
+                                <div class="alert alert-danger error-message" *ngIf="(userFormGroup.controls.confirmPassword.invalid || !isPasswordsMatch()) && isSubmitted">
+                                    <div *ngIf="userFormGroup?.controls?.confirmPassword?.errors?.required">
+                                        Confirm Password is required.
+                                    </div>
+
+                                    <div *ngIf="!isPasswordsMatch()">
+                                        Passwords must match.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="btn-container">
+                                <input type="submit" class="btn btn-primary" value="Submit" [disabled]="isLoading">
+                                <input type="button" (click)="switchAction()" class="btn btn-danger" [disabled]="isLoading" value="Cancel">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- End of Register -->
+    </div>
+</div>

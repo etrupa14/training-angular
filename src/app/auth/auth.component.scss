@@ -1,0 +1,16 @@
+.page-auth {
+    .welcome-container,
+    .register-container {
+        margin: 0 50px;
+    }
+    .welcome-content {
+        p,
+        h5 {
+            text-align: center;
+        }
+    }
+    .error-message {
+        margin-top: 5px;
+        font-size: 10px;
+    }
+}

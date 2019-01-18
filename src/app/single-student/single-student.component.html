@@ -1,0 +1,56 @@
+<div class="container-fluid page-single-student">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-info">
+                <h4 class="page-header">Student Details</h4>
+                <p>
+                    <label for="">Name: </label>
+                    <span>
+                      {{ student?.firstName }} {{ student?.middleName }} {{ student?.lastName }}
+                    </span>
+                </p>
+
+                <p>
+                    <label for="">Gender: </label>
+                    <span>{{ student?.gender | capitalize }}</span>
+                </p>
+
+                <p>
+                    <label for="">Student Number: </label>
+                    <span>{{ student?.studentNumber }}</span>
+                </p>
+            </div>
+
+            <div class="alert alert-warning">
+                <h4 class="page-header">Enrollments</h4>
+
+                <p *ngIf="student?.studentEnrollments.length < 1">No available enrollments</p>
+
+                <div class="row">
+                    <div *ngFor="let enrollment of student?.studentEnrollments">
+                        <div class="col-xs-6 course">
+                            {{ enrollment?.course.name }} - {{ enrollment?.course.units }} Unit(s)
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <input type="button" [disabled]="isLoading" (click)="unEnroll(enrollment?.course.id)" class="btn btn-default btn-enroll" value="Unenroll">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-success">
+                <h4 class="page-header">Available Courses</h4>
+                <div class="row">
+                    <div *ngFor="let course of courses">
+                        <div class="col-xs-6 course">
+                            {{ course.name }} - {{ course.units }} Unit(s)
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <input type="button" [disabled]="isLoading" (click)="enroll(course.id)" class="btn btn-default btn-enroll" value="Enroll">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="container-fluid page-student">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-info">
+                <h5 class="page-header">Filter:</h5>
+                <select name="" id="" class="form-control" [(ngModel)]="filter.gender">
+                  <option value="">No Selected</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <table class="table table-hover table-bordered container-box">
+                <tbody>
+                    <tr *ngFor="let student of students">
+                        <ng-template [ngIf]="shouldShow(student)">
+                            <td>
+                                {{ student?.firstName }}
+                            </td>
+
+                            <td>
+                                {{ student?.lastName }}
+                            </td>
+
+                            <td>
+                                {{ student?.studentNumber }}
+                            </td>
+
+                            <td>
+                                {{ student?. gender | capitalize }}
+                            </td>
+
+                            <td class="text-center">
+                                <a (click)="viewStudent(student)" class="btn btn-default">View Student</a>
+                            </td>
+                        </ng-template>
+                    </tr>
+                </tbody>
+                <tr *ngIf="students.length < 1">
+                    <td colspan="4" class="text-center">
+                        No students
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
